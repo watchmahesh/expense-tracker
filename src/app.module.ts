@@ -6,9 +6,10 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HealthController } from './health/health.controller';
 import { AuthModule } from './auth/auth.module';
+import { CostModule } from './cost/cost.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule,AuthModule],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule,AuthModule,CostModule],
   controllers: [AppController,HealthController],
   providers: [AppService],
 })
