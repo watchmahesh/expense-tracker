@@ -1,16 +1,27 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request, Res, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User } from 'src/users/user.entity';
 import { JwtAuthGuard } from './jwtAuthGuard';
+import { LoginDto } from './dto/login.dto';
+import { Response } from 'express';
 
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
-
+  constructor(private authService: AuthService) { }
   @Post('login')
-  async login(@Body() user: User) {
-    return this.authService.login(user);
+  async login(@Body() body: LoginDto, @Res() res: Response) {
+    let result;
+    if (body.refreshToken) {
+      result = await this.authService.refreshAccessToken(body.refreshToken);
+    } else {
+      result = await this.authService.login(body.username, body.password);
+    }
+    return res.status(HttpStatus.OK).json({
+      success: true,
+      message: 'Login successful',
+      data: result,
+    });
   }
 
   @Post('register')
