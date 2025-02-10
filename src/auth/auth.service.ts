@@ -13,8 +13,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) { }
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.usersService.findOne(email);
     if (user && await user.validatePassword(pass)) {
       const { password, ...result } = user;
       return result;
@@ -22,8 +22,13 @@ export class AuthService {
     return null;
   }
 
-  async login(username: string, password: string) {
-    const payload: JwtPayload = { username: username };
+  async login(email: string, password: string) {
+    const user = await this.validateUser(email, password);
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+    const payload: JwtPayload = { username: email };
 
     // Create access and refresh tokens
     const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });

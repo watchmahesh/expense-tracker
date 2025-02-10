@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreateFixedCostsDailyTable1723276608950 implements MigrationInterface {
+export class FixedCostDaily1723893944634 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
@@ -19,7 +19,7 @@ export class CreateFixedCostsDailyTable1723276608950 implements MigrationInterfa
                     isNullable: false,
                 },
                 {
-                    name: 'month',
+                    name: 'date',
                     type: 'date',
                     isNullable: false,
                 },
@@ -30,13 +30,13 @@ export class CreateFixedCostsDailyTable1723276608950 implements MigrationInterfa
                     scale: 2,
                     isNullable: false,
                 },
+
                 {
-                    name: 'percentage_of_d',
-                    type: 'decimal',
-                    precision: 5,
-                    scale: 2,
+                    name: 'description',
+                    type: 'text',
                     isNullable: true,
-                }
+                },
+
             ]
         }));
 

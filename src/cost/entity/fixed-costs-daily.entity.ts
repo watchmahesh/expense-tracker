@@ -8,14 +8,16 @@ export class FixedCostsDaily {
 
     @ManyToOne(() => CostItems, (costItem) => costItem.fixedCostsDaily, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'cost_item_id' })
-    costItem: CostItems;
+    costItems: CostItems;
 
     @Column()
-    month: Date;
+    date: Date;
 
     @Column({ type: 'decimal', precision: 15, scale: 2 })
     amount: number;
 
-    @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
-    percentage_of_d: number;
+    @Column({ type: 'text' })
+    description: string;
+
+
 }

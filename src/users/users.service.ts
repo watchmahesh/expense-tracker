@@ -10,11 +10,16 @@ export class UsersService {
         private usersRepository: Repository<User>,
     ) { }
 
-    async findOne(username: string): Promise<User | undefined> {
+    async findOne(email: string): Promise<User | undefined> {
+        return this.usersRepository.findOne({ where: { email } });
+    }
+
+    async findOneByUsername(username: string): Promise<User | undefined> {
         return this.usersRepository.findOne({ where: { username } });
     }
 
-    async create(user: User): Promise<User> {
+    async create(userData: Partial<User>): Promise<User> {
+        const user = this.usersRepository.create(userData); // This ensures the entity is created correctly
         return this.usersRepository.save(user);
     }
 }

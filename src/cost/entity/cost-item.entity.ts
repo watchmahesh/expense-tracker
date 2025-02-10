@@ -22,7 +22,7 @@ export class CostItems {
     @Column({ type: 'enum', enum: CostItemType })
     type: CostItemType;
 
-    @OneToMany(() => FixedCostsDaily, (fixedCostsDaily) => fixedCostsDaily.costItem)
+    @OneToMany(() => FixedCostsDaily, (fixedCostsDaily) => fixedCostsDaily.costItems)
     fixedCostsDaily: FixedCostsDaily[];
 
     @OneToMany(() => VariableCostsMonthly, (variableCostsMonthly) => variableCostsMonthly.costItem)

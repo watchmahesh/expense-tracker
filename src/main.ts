@@ -4,10 +4,13 @@ import * as morgan from "morgan";
 import * as momenttz from "moment-timezone";
 import { Any } from 'typeorm';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ResponseInterceptor } from './interceptor/response.interceptor';
+import { AllExceptionsFilter } from './interceptor/all-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalFilters(new AllExceptionsFilter());
   app.enableCors();
   app.setGlobalPrefix("api/v1");
 

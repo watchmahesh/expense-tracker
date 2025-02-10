@@ -9,7 +9,8 @@ export class ProfileController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async getProfile(@Request() req) {
+    console.log(req.user)
     const userName = req.user.username;
-    return this.usersService.findOne(userName);
+    return this.usersService.findOneByUsername(userName);
   }
 }
